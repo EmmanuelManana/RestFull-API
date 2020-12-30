@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const router = express.Router();
 const bodyParser = require("body-parser");
+const cors = require("cors");
 
 
 //temp
@@ -16,6 +17,7 @@ const DB_CONNECTION =  process.env.DB_CONNECT;
 app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
+app.use(cors())
 
 //import Routes
 const postsRoute = require("./routes/posts")
