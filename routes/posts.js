@@ -24,4 +24,38 @@ router.post('/', async (req,res) =>{
     }
 })
 
+//get specific post, through a query parameter
+router.get('/:postId', async (req,res) =>{
+
+    try{
+        const post = await Post.findById(req.params.postId)
+        res.status(200).json(post)
+    }catch(err){
+        res.status(400).send({message: err})
+    }
+   
+})
+
+//delete a specific post
+router.delete('/:postId', async (req,res) => {
+    try {
+        const post = await Post.remove({_id: req.params.postId});
+    }catch(err){
+        res.status(400).send({message: err})
+    }
+})
+
+//Update a post by id
+router.patch('/:postId', async (req,res) => {
+    try {
+        const updatedPost = await Post.updateOne(
+            {_id: req.params.postId},
+            { $set: {title: req.body.title}}
+        );
+        res.json(updatedPost);
+    } catch (err) {
+        res.status(400).send({message: err})
+    }
+})
+
 module.exports = router;
